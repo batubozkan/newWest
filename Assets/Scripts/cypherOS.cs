@@ -28,29 +28,34 @@ public class cypherOS : MonoBehaviour
 
     private void SubmitInput(string arg0)
     {
-        if (firstRun == 0) {
-            currentText[i] = "> Welcome to CypherOS v0.1";
-            output.text = printArray(currentText);
-                }
-        if (i != 17)
-        {
-            i++;
-            currentText[i] = arg0;
-            output.text = printArray(currentText);
-        }
-        else
-        {
-            for(int k = 0; k > 17; k++)
+
+            if (firstRun == 0)
             {
-                currentText[k] = currentText[k + 1];
+                currentText[i] = "> Welcome to CypherOS v0.1";
+                output.text = printArray(currentText);
             }
-            currentText[18] = arg0;
-            output.text = printArray(currentText);
-        }
-        if (firstRun == 0)
-            firstRun++;
-        input.text = "";
-        input.ActivateInputField();
+            if (i != 17)
+            {
+                i++;
+                arg0= inputCheck(arg0);   
+                currentText[i] = arg0;
+                output.text = printArray(currentText);
+            }
+            else
+            {
+                for (int k = 0; k < 17; k++)
+                {
+                    currentText[k] = currentText[k + 1];
+                }
+                arg0 = inputCheck(arg0);
+                currentText[17] = arg0;
+                output.text = printArray(currentText);
+            }
+            if (firstRun == 0)
+                firstRun++;
+            input.text = "";
+            input.ActivateInputField();
+
     }
 
 
@@ -60,7 +65,6 @@ public class cypherOS : MonoBehaviour
         for (int j = 0; j > 18; j++)
             arr[j] = null;
     }
-
 
     //Printing to GUI
     private string printArray(string[] arr)
@@ -77,6 +81,27 @@ public class cypherOS : MonoBehaviour
                 newText = arr[j];
         }
         return newText;
+    }
+
+    private string inputCheck(string str)
+    {
+        if(str == "scan")
+        {
+            str = str + "\n" +  "Scanning...";
+        }
+        return str;
+    }
+
+
+    IEnumerator AnimateText(string strComplete)
+    {
+        int animate = 0;
+        string str = "";
+        while ( animate < strComplete.Length)
+        {
+            str += strComplete[i++];
+            yield return new WaitForSeconds(0.5F);
+        }
     }
 
 }
